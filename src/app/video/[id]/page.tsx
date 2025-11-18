@@ -3,9 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useRef, useEffect, useState } from 'react';
-import { Card } from '@/components/Card';
 import { Chip } from '@/components/Chip';
-import { CalloutCard } from '@/components/CalloutCard';
 import { AnnotatedText } from '@/components/AnnotatedText';
 
 interface VideoDetailPageProps {
@@ -110,25 +108,20 @@ export default function VideoDetailPage({ params }: VideoDetailPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Google Labs-style organic background blobs */}
-      <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-br from-purple-100 to-pink-100 rounded-full blur-3xl opacity-25 translate-x-1/3 -translate-y-1/3"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-teal-100 to-cyan-100 rounded-full blur-3xl opacity-25 -translate-x-1/3 translate-y-1/3"></div>
-      <div className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-gradient-to-br from-orange-100 to-yellow-100 rounded-full blur-3xl opacity-15"></div>
-
-      <div className="relative z-10 max-w-[1400px] mx-auto px-10 py-12">
-        {/* Back Button with Google Labs style */}
+    <div className="min-h-screen bg-white">
+      <div className="max-w-[1200px] mx-auto px-8 py-10">
+        {/* Back Button - Clean & Simple */}
         <button
           onClick={() => router.push('/')}
-          className="inline-flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-blue-600 bg-white hover:bg-blue-50 border-2 border-gray-200 hover:border-blue-300 rounded-full mb-12 transition-all duration-200 shadow-sm hover:shadow-md group"
+          className="inline-flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded-lg mb-8 transition-all duration-150 group"
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-[14px] font-semibold">Back to Home</span>
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+          <span className="text-[14px] font-medium">Back to Home</span>
         </button>
 
-        {/* Full Width Video Player */}
-        <div className="relative group mb-8">
-          <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl border-4 border-white ring-2 ring-gray-200 group-hover:ring-blue-300 transition-all">
+        {/* Video Player - Wider for impact */}
+        <div className="max-w-[900px] mx-auto mb-8">
+          <div className="aspect-video rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5">
             <iframe
               ref={iframeRef}
               width="100%"
@@ -141,144 +134,137 @@ export default function VideoDetailPage({ params }: VideoDetailPageProps) {
               className="w-full h-full"
             ></iframe>
           </div>
-          {/* Playful accent blob */}
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity"></div>
         </div>
 
-        {/* Video Metadata */}
-        <div className="space-y-4 mb-10">
-          <h1 className="text-[42px] font-bold text-gray-900 leading-tight tracking-tight">
+        {/* Video Title - Centered, narrower */}
+        <div className="max-w-[720px] mx-auto mb-10">
+          <h1 className="text-[32px] font-bold text-gray-900 leading-tight tracking-tight text-center">
             {analysis.title}
           </h1>
         </div>
 
-        {/* Macro Themes - Google Labs Polish */}
-        {analysis.macroThemes && analysis.macroThemes.length > 0 && (
-          <div className="mb-8">
-            <div className="bg-white bg-gradient-to-b from-white to-gray-50 rounded-xl p-8 shadow-sm border border-black/5 hover:shadow-md transition-all">
-              <h2 className="text-[24px] font-semibold text-gray-900 mb-6">
-                Macro Themes
-              </h2>
-              <div className="space-y-3">
-                {analysis.macroThemes.map((theme, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <span className="text-indigo-600 mt-1.5 flex-shrink-0">•</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[15px] text-gray-800 leading-[1.6]">
-                        <span className="font-medium">{theme.theme}:</span> {theme.whyItMatters}
-                        {theme.evidence && theme.evidence.length > 0 && (
-                          <span className="inline-flex flex-wrap gap-1.5 ml-2">
-                            {theme.evidence.map((timestamp, idx) => (
-                              <button
-                                key={idx}
-                                onClick={() => handleTimestampClick(timestamp)}
-                                className="inline-flex items-center text-xs px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-gray-600 hover:bg-gray-200 hover:border-gray-300 transition-colors"
-                              >
-                                {timestamp}
-                              </button>
-                            ))}
-                          </span>
-                        )}
-                      </p>
+        {/* Main Content - Centered Column */}
+        <div className="max-w-[720px] mx-auto">
+          {/* Macro Themes */}
+          {analysis.macroThemes && analysis.macroThemes.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Macro Themes
+                </h2>
+                <div className="space-y-2.5">
+                  {analysis.macroThemes.map((theme, index) => (
+                    <div key={index} className="flex items-start gap-2.5">
+                      <span className="text-indigo-600 mt-1 flex-shrink-0 text-sm">•</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[16px] text-gray-800 leading-[1.65]">
+                          <span className="font-medium">{theme.theme}:</span> {theme.whyItMatters}
+                          {theme.evidence && theme.evidence.length > 0 && (
+                            <span className="inline-flex flex-wrap gap-1 ml-1.5 align-middle">
+                              {theme.evidence.map((timestamp, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => handleTimestampClick(timestamp)}
+                                  className="inline-flex items-center text-[11px] px-1.5 py-0.5 h-[19px] rounded-full bg-gray-100 border border-gray-200 text-gray-600 hover:bg-gray-200 hover:border-gray-300 transition-colors font-mono"
+                                >
+                                  {timestamp}
+                                </button>
+                              ))}
+                            </span>
+                          )}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Executive Narrative with Annotations - Google Labs Polish */}
-        {analysis.executiveNarrative && (
-          <div className="mb-8">
-            <div className="bg-white bg-gradient-to-b from-white to-gray-50 rounded-xl p-8 shadow-sm border border-black/5 hover:shadow-md transition-all">
-              <h2 className="text-[24px] font-semibold text-gray-900 mb-6">
-                Executive Analysis
-              </h2>
-              <AnnotatedText
-                text={analysis.executiveNarrative}
-                annotations={analysis.annotations || []}
-                onTimestampClick={handleTimestampClick}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Micro Insights - Google Labs Polish */}
-        {analysis.microInsights && analysis.microInsights.length > 0 && (
-          <div className="mb-8">
-            <div className="bg-white bg-gradient-to-b from-white to-gray-50 rounded-xl p-8 shadow-sm border border-black/5 hover:shadow-md transition-all">
-              <h2 className="text-[24px] font-semibold text-gray-900 mb-6">
-                Micro Insights
-              </h2>
-              <div className="space-y-3">
-                {analysis.microInsights.map((item, index) => (
-                  <div key={index} className="flex gap-3 items-start">
-                    <button
-                      onClick={() => handleTimestampClick(item.timestamp)}
-                      className="flex-shrink-0 px-2 py-0.5 bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700 text-xs font-mono rounded-md transition-colors"
-                    >
-                      {item.timestamp}
-                    </button>
-                    <p className="text-[15px] text-gray-700 leading-[1.7] flex-1">{item.insight}</p>
-                  </div>
-                ))}
+          {/* Executive Narrative with Annotations */}
+          {analysis.executiveNarrative && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Video Analysis
+                </h2>
+                <AnnotatedText
+                  text={analysis.executiveNarrative}
+                  annotations={analysis.annotations || []}
+                  onTimestampClick={handleTimestampClick}
+                />
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Legacy Key Insights Card (for backward compatibility) */}
-        {analysis.keyInsights && analysis.keyInsights.length > 0 && (
-          <div className="relative group mb-8">
-            <div className="bg-gradient-to-br from-white to-purple-50/30 rounded-3xl p-10 shadow-xl border-2 border-purple-100 hover:border-purple-200 transition-all">
-              <h2 className="text-[26px] font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
-                Key Insights
-              </h2>
-              <ul className="space-y-4 text-[16px] text-gray-700">
-                {analysis.keyInsights.map((insight, index) => (
-                  <li key={index} className="flex gap-4 leading-[1.7] break-words">
-                    <span className="text-[#1CC6B2] text-2xl mt-0.5 flex-shrink-0">•</span>
-                    <span>{insight}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-          </div>
-        )}
-
-        {/* Legacy Deep Summary Card (for backward compatibility) */}
-        {analysis.deepSummary && analysis.deepSummary.length > 0 && (
-          <div className="relative group mb-10">
-            <div className="bg-gradient-to-br from-white to-blue-50/30 rounded-3xl p-10 shadow-xl border-2 border-blue-100 hover:border-blue-200 transition-all">
-              <h2 className="text-[26px] font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                Deep Summary
-              </h2>
-              <div className="space-y-5 text-[17px] text-gray-700 leading-[1.8] max-w-none break-words">
-                {analysis.deepSummary.map((paragraph, index) => (
-                  <p key={index} className={index === 0 ? "first-letter:text-4xl first-letter:font-bold first-letter:text-blue-600 first-letter:mr-1 first-letter:float-left" : ""}>
-                    {paragraph}
-                  </p>
-                ))}
+          {/* Micro Insights */}
+          {analysis.microInsights && analysis.microInsights.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Micro Insights
+                </h2>
+                <div className="space-y-2.5">
+                  {analysis.microInsights.map((item, index) => (
+                    <div key={index} className="flex gap-2.5 items-start">
+                      <button
+                        onClick={() => handleTimestampClick(item.timestamp)}
+                        className="flex-shrink-0 px-2 py-0.5 h-[20px] bg-gray-100 hover:bg-gray-200 border border-gray-200 hover:border-gray-300 text-gray-700 text-[11px] font-mono rounded-full transition-colors"
+                      >
+                        {item.timestamp}
+                      </button>
+                      <p className="text-[16px] text-gray-700 leading-[1.65] flex-1">{item.insight}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-          </div>
-        )}
+          )}
 
-        {/* Two Column Layout for Key Moments and 60 Second Callout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Key Moments Card */}
-          <div className="relative group">
-            <div className="bg-gradient-to-br from-white to-teal-50/30 rounded-3xl p-8 shadow-xl border-2 border-teal-100 hover:border-teal-200 transition-all h-full">
-              <h2 className="text-[24px] font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 bg-teal-500 rounded-full animate-pulse"></span>
+          {/* Legacy Key Insights (for backward compatibility) */}
+          {analysis.keyInsights && analysis.keyInsights.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Key Insights
+                </h2>
+                <ul className="space-y-3 text-[16px] text-gray-700">
+                  {analysis.keyInsights.map((insight, index) => (
+                    <li key={index} className="flex gap-3 leading-[1.65] break-words">
+                      <span className="text-indigo-600 mt-0.5 flex-shrink-0">•</span>
+                      <span>{insight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Legacy Deep Summary (for backward compatibility) */}
+          {analysis.deepSummary && analysis.deepSummary.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Deep Summary
+                </h2>
+                <div className="space-y-4 text-[16px] text-gray-700 leading-[1.65] max-w-none break-words">
+                  {analysis.deepSummary.map((paragraph, index) => (
+                    <p key={index}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Key Moments */}
+          <div className="mb-6">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
                 Key Moments
               </h2>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {analysis.keyMoments.map((moment, index) => (
                   <Chip
                     key={index}
@@ -289,73 +275,59 @@ export default function VideoDetailPage({ params }: VideoDetailPageProps) {
                 ))}
               </div>
             </div>
-            {/* Playful accent blob */}
-            <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-teal-200 to-cyan-200 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
           </div>
 
           {/* Must Watch Callout */}
-          <div className="relative group overflow-hidden">
-            <div className="bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 border-3 border-orange-200 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all h-full">
-              {/* Decorative elements */}
-              <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-orange-300/20 to-pink-300/20 rounded-full blur-xl"></div>
-              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-300/20 to-blue-300/20 rounded-full blur-xl"></div>
+          <div className="mb-6">
+            <div className="bg-gradient-to-br from-orange-50 to-pink-50 rounded-2xl p-6 shadow-sm border border-orange-200">
+              <h3 className="text-[22px] font-semibold text-gray-900 mb-4">
+                ⏱️ Must Watch
+              </h3>
+              <p className="text-[16px] text-gray-700 leading-[1.65] break-words">
+                <strong>Jump to <button onClick={() => handleTimestampClick(analysis.mustWatch.timestamp)} className="text-indigo-600 font-semibold hover:text-indigo-800 underline cursor-pointer transition-colors">{analysis.mustWatch.timestamp}</button></strong> — {analysis.mustWatch.description}
+              </p>
+            </div>
+          </div>
 
-              <div className="relative z-10">
-                <h3 className="text-[24px] font-bold text-gray-900 mb-5 flex items-center gap-3">
-                  <span className="text-3xl">⏱️</span>
-                  If you only watch 60 seconds, watch this
-                </h3>
-                <p className="text-[16px] text-gray-700 leading-[1.7] break-words">
-                  <strong>Jump to <button onClick={() => handleTimestampClick(analysis.mustWatch.timestamp)} className="text-[#1CC6B2] font-bold text-lg hover:text-[#15a392] underline cursor-pointer transition-colors">{analysis.mustWatch.timestamp}</button></strong> {analysis.mustWatch.description}
-                </p>
+          {/* Mental Models Section */}
+          {analysis.mentalModels && analysis.mentalModels.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Mental Models & Frameworks
+                </h2>
+                <ul className="space-y-3 text-[16px] text-gray-700">
+                  {analysis.mentalModels.map((model, index) => (
+                    <li key={index} className="flex gap-3 leading-[1.65] break-words">
+                      <span className="text-indigo-600 mt-0.5 flex-shrink-0">▸</span>
+                      <span>{model}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            {/* Animated accent blob */}
-            <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-gradient-to-br from-orange-300 to-pink-300 rounded-full blur-3xl opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-500"></div>
-          </div>
+          )}
+
+          {/* Blindspots Section */}
+          {analysis.blindspots && analysis.blindspots.length > 0 && (
+            <div className="mb-6">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="text-[22px] font-semibold text-gray-900 mb-5">
+                  Strategic Blindspots
+                </h2>
+                <ul className="space-y-3 text-[16px] text-gray-700">
+                  {analysis.blindspots.map((blindspot, index) => (
+                    <li key={index} className="flex gap-3 leading-[1.65] break-words">
+                      <span className="text-amber-600 mt-0.5 flex-shrink-0">⚠</span>
+                      <span>{blindspot}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* Mental Models Section */}
-        {analysis.mentalModels && analysis.mentalModels.length > 0 && (
-          <div className="relative group mt-8">
-            <div className="bg-gradient-to-br from-white to-indigo-50/30 rounded-3xl p-10 shadow-xl border-2 border-indigo-100 hover:border-indigo-200 transition-all">
-              <h2 className="text-[26px] font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                Mental Models & Frameworks
-              </h2>
-              <ul className="space-y-4 text-[16px] text-gray-700">
-                {analysis.mentalModels.map((model, index) => (
-                  <li key={index} className="flex gap-4 leading-[1.7] break-words">
-                    <span className="text-indigo-600 text-2xl mt-0.5 flex-shrink-0">▸</span>
-                    <span>{model}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-indigo-200 to-purple-200 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-          </div>
-        )}
-
-        {/* Blindspots Section */}
-        {analysis.blindspots && analysis.blindspots.length > 0 && (
-          <div className="relative group mt-8">
-            <div className="bg-gradient-to-br from-white to-amber-50/30 rounded-3xl p-10 shadow-xl border-2 border-amber-100 hover:border-amber-200 transition-all">
-              <h2 className="text-[26px] font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
-                Strategic Blindspots
-              </h2>
-              <ul className="space-y-4 text-[16px] text-gray-700">
-                {analysis.blindspots.map((blindspot, index) => (
-                  <li key={index} className="flex gap-4 leading-[1.7] break-words">
-                    <span className="text-amber-600 text-2xl mt-0.5 flex-shrink-0">⚠</span>
-                    <span>{blindspot}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-          </div>
-        )}
+        {/* End Main Content Centered Column */}
       </div>
     </div>
   );

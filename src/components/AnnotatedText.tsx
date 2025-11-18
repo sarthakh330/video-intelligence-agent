@@ -59,33 +59,24 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
   }, [activePopover]);
 
   const getAnnotationColor = (type: string) => {
+    // Subtle Medium-style highlight colors - barely visible, polished
     switch (type) {
       case 'concept':
-        return 'bg-blue-100 hover:bg-blue-200 border-b-2 border-blue-500';
+        return 'bg-blue-50/50 hover:bg-blue-50';
       case 'tension':
-        return 'bg-amber-100 hover:bg-amber-200 border-b-2 border-amber-500';
+        return 'bg-amber-50/50 hover:bg-amber-50';
       case 'prediction':
-        return 'bg-purple-100 hover:bg-purple-200 border-b-2 border-purple-500';
+        return 'bg-purple-50/50 hover:bg-purple-50';
       case 'strategy':
-        return 'bg-green-100 hover:bg-green-200 border-b-2 border-green-500';
+        return 'bg-emerald-50/50 hover:bg-emerald-50';
       default:
-        return 'bg-gray-100 hover:bg-gray-200 border-b-2 border-gray-500';
+        return 'bg-yellow-50/50 hover:bg-yellow-50';
     }
   };
 
-  const getPopoverColor = (type: string) => {
-    switch (type) {
-      case 'concept':
-        return 'border-blue-200/50 bg-white';
-      case 'tension':
-        return 'border-amber-200/50 bg-white';
-      case 'prediction':
-        return 'border-purple-200/50 bg-white';
-      case 'strategy':
-        return 'border-green-200/50 bg-white';
-      default:
-        return 'border-gray-200/50 bg-white';
-    }
+  const getPopoverColor = () => {
+    // All popovers use clean white surface with subtle border
+    return 'border-gray-200/60 bg-white';
   };
 
   const getTypeLabel = (type: string) => {
@@ -157,7 +148,7 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
     if (!annotations || annotations.length === 0) {
       // Render paragraphs without annotations
       return text.split('\n\n').map((para, index) => (
-        <p key={index} className="text-[17px] leading-[1.8] text-gray-800 mb-5">
+        <p key={index} className="text-[16px] leading-[1.65] text-gray-800 mb-4">
           {para}
         </p>
       ));
@@ -271,7 +262,7 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
         if (partIndex > 0 && currentParagraph.length > 0) {
           // New paragraph detected, push current paragraph
           result.push(
-            <p key={`para-${paragraphIndex}`} className="text-[17px] leading-[1.8] text-gray-800 mb-5">
+            <p key={`para-${paragraphIndex}`} className="text-[16px] leading-[1.65] text-gray-800 mb-4">
               {currentParagraph}
             </p>
           );
@@ -281,31 +272,12 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
 
         if (part.trim()) {
           if (segment.annotation && partIndex === 0) {
-            // Annotated span - inline
+            // Annotated span - inline with Medium-style highlight
             currentParagraph.push(
               <span
                 key={`seg-${segmentIndex}-${partIndex}`}
-                onMouseEnter={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const newPopoverState = {
-                    annotation: segment.annotation!,
-                    x: rect.left,
-                    y: rect.bottom + window.scrollY + 8
-                  };
-                  console.log('🎈 HOVER - Setting popover state:', {
-                    x: newPopoverState.x,
-                    y: newPopoverState.y,
-                    windowScrollY: window.scrollY,
-                    rectBottom: rect.bottom,
-                    type: newPopoverState.annotation.type,
-                    insight: newPopoverState.annotation.insight.substring(0, 50) + '...'
-                  });
-                  setActivePopover(newPopoverState);
-                }}
-                onMouseLeave={() => {
-                  // Don't close immediately - let the popover handle it
-                }}
                 onClick={(e) => {
+                  e.stopPropagation();
                   const rect = e.currentTarget.getBoundingClientRect();
                   const newPopoverState = {
                     annotation: segment.annotation!,
@@ -322,8 +294,16 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
                   });
                   setActivePopover(newPopoverState);
                 }}
-                className={`${getAnnotationColor(segment.annotation.type)} cursor-pointer transition-all duration-150 rounded-sm px-0.5 -mx-0.5`}
-                style={{ display: 'inline', whiteSpace: 'pre-wrap', lineHeight: 'inherit' }}
+                className={`${getAnnotationColor(segment.annotation.type)} cursor-pointer transition-all duration-120 rounded`}
+                style={{
+                  display: 'inline',
+                  whiteSpace: 'pre-wrap',
+                  lineHeight: 'inherit',
+                  padding: '0.125rem 0.25rem',
+                  margin: '0 -0.125rem',
+                  boxDecorationBreak: 'clone',
+                  WebkitBoxDecorationBreak: 'clone'
+                }}
               >
                 {part}
               </span>
@@ -346,7 +326,7 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
     // Push final paragraph
     if (currentParagraph.length > 0) {
       result.push(
-        <p key={`para-${paragraphIndex}`} className="text-[17px] leading-[1.8] text-gray-800 mb-5">
+        <p key={`para-${paragraphIndex}`} className="text-[16px] leading-[1.65] text-gray-800 mb-4">
           {currentParagraph}
         </p>
       );
@@ -370,56 +350,70 @@ export function AnnotatedText({ text, annotations, onTimestampClick }: Annotated
         {renderAnnotatedText()}
       </div>
 
-      {/* Popover - Google Labs style */}
+      {/* Popover - Google Labs style with pointer arrow */}
       {activePopover && (
         <div
           ref={popoverRef}
-          className={`fixed z-50 max-w-sm p-4 rounded-md shadow-lg border ${getPopoverColor(activePopover.annotation.type)} animate-fadeIn`}
+          className={`fixed z-50 w-[360px] ${getPopoverColor()} animate-fadeIn`}
           style={{
-            left: `${Math.min(activePopover.x, window.innerWidth - 384)}px`,
-            top: `${activePopover.y}px`
+            left: `${Math.min(Math.max(12, activePopover.x), window.innerWidth - 372)}px`,
+            top: `${activePopover.y}px`,
+            boxShadow: '0 6px 20px rgba(0, 0, 0, 0.12)',
+            borderRadius: '12px',
+            border: '1px solid #ececec'
           }}
         >
-          <div className="mb-3">
-            <div className="text-[11px] font-medium text-gray-500 uppercase tracking-wider mb-2">
-              {getTypeLabel(activePopover.annotation.type)}
-            </div>
-            <p className="text-[14px] leading-[1.6] text-gray-800">
-              {activePopover.annotation.insight}
-            </p>
-          </div>
+          {/* Small pointer arrow */}
+          <div
+            className="absolute -top-2 left-8 w-4 h-4 bg-white border-l border-t border-gray-200/60 rotate-45"
+            style={{ borderRadius: '2px' }}
+          ></div>
 
-          {activePopover.annotation.timestamp && onTimestampClick && (
-            <button
-              onClick={() => {
-                onTimestampClick(activePopover.annotation.timestamp!);
-                setActivePopover(null);
-              }}
-              className="w-full px-3 py-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded text-[13px] font-medium text-gray-700 transition-colors duration-150 flex items-center justify-center gap-2"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {activePopover.annotation.timestamp}
-            </button>
-          )}
+          <div className="relative bg-white rounded-xl p-5">
+            <div className="mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">
+                  {getTypeLabel(activePopover.annotation.type)}
+                </span>
+              </div>
+              <p className="text-[15px] leading-[1.65] text-gray-800 font-normal">
+                {activePopover.annotation.insight}
+              </p>
+            </div>
+
+            {activePopover.annotation.timestamp && onTimestampClick && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTimestampClick(activePopover.annotation.timestamp!);
+                  setActivePopover(null);
+                }}
+                className="w-full px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200/80 rounded-lg text-[13px] font-medium text-gray-700 transition-all duration-120 flex items-center justify-center gap-2 hover:shadow-sm"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Jump to {activePopover.annotation.timestamp}
+              </button>
+            )}
+          </div>
         </div>
       )}
 
       <style jsx>{`
         .animate-fadeIn {
-          animation: fadeIn 150ms ease-in-out;
+          animation: fadeIn 120ms cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.96) translateY(-4px);
           }
           to {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
           }
         }
       `}</style>
