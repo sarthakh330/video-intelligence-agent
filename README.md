@@ -11,6 +11,7 @@ An elite-grade Video Intelligence Engine that transforms YouTube videos into dee
 - **Micro Insights**: Timestamped sharp takeaways (not generic observations)
 - **Key Moments**: Meaningful inflection points in the video
 - **Must-Watch Segment**: The single most valuable 60 seconds
+- **Long-Form Blog Generation**: Transform analysis into 2500-3500 word Stratechery-quality blog posts
 
 ### Writing Style
 - Knowledge-dense and insight-driven
@@ -41,6 +42,7 @@ Add your OpenAI API key:
 ```
 OPENAI_API_KEY=your-key-here
 OPENAI_MODEL=gpt-4o  # or gpt-4o-mini for faster/cheaper analysis
+OPENAI_BLOG_MODEL=gpt-4o  # Model for blog generation (gpt-4o recommended)
 ```
 
 3. Run the development server:
@@ -55,6 +57,50 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npm test
 ```
+
+## Long-Form Blog Generation
+
+Transform video analysis into publication-quality blog posts matching the depth of Stratechery, MIT Technology Review, and a16z essays.
+
+### Features
+- **2500-3500 word articles** with strategic depth
+- **Industry context and framing** beyond the video content
+- **Structured sections** with insight-oriented headers
+- **Pull quotes** from key moments in the video
+- **Screenshot integration** at strategic points
+- **Citations and references** to external sources
+- **Related resources** for deeper exploration
+- **Export to Markdown** for publishing anywhere
+
+### How to Generate
+1. Analyze a video (existing workflow)
+2. Click "Generate Blog Post" button at bottom of analysis
+3. Wait 30-60 seconds for generation
+4. Blog appears below with full formatting
+5. Export to Markdown for your blog/Medium/Substack
+
+### Screenshot Quality
+By default, blog posts use YouTube's default thumbnail for all screenshots. For **actual video frame grabs** at specific timestamps:
+
+1. Sign up for [ScreenshotOne](https://screenshotone.com/) (or similar service)
+2. Add `SCREENSHOT_API_KEY=your-key` to `.env.local`
+3. Blog posts will now include actual frame captures at key moments
+
+**Without API:** Default YouTube thumbnail for all images
+**With API:** Precise frame grabs at AI-identified timestamps
+
+### Cost Considerations
+- Video analysis: ~$0.05-0.15 per video
+- Blog generation: ~$0.30-0.80 per blog
+- Screenshots (optional): ~$0.01-0.05 per image
+- **Total per video with blog: ~$0.35-0.95** (or ~$0.40-1.25 with screenshots)
+
+### Writing Quality
+Blog posts are optimized to match:
+- **Stratechery**: Strategic business frameworks and analysis
+- **MIT Tech Review**: Technical rigor with accessibility
+- **a16z Essays**: First-principles thinking about trends
+- **The Economist**: Global context and implications
 
 ## Architecture
 

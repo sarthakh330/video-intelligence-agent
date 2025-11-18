@@ -14,7 +14,9 @@
       "Bash(npx tsc:*)",
       "Bash(npm run build:*)",
       "Bash(PORT=3000 npm run dev:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nUpgrade video analysis page: Medium-style layout & enhanced annotations\n\n**Layout Changes:**\n- Implemented centered Medium-style layout (720px content column, 900px video)\n- Removed decorative background blobs and visual noise\n- Changed from 1400px to 1200px max container width\n- Centered video title and simplified back button\n\n**Annotation System:**\n- Upgraded to click-based popovers (removed hover interactions)\n- Subtle Medium-style highlights (50/50 opacity backgrounds)\n- Added pointer arrow to popovers for better UX\n- Smooth 120ms cubic-bezier animations\n- Improved inline text wrapping with box-decoration-break\n\n**Typography Standardization:**\n- Title: 32px (down from 42px), centered\n- Section headings: 22px (consistent across all sections)\n- Body text: 16px (previously 15-17px mixed)\n- Line height: 1.65 (consistent, optimal readability)\n- Timestamps: 11px in rounded-full pills\n\n**Spacing Optimization:**\n- Section gaps: mb-6 (down from mb-8/mb-10)\n- Card padding: p-6 (down from p-8/p-10)\n- Tighter internal spacing reduces page length by ~25%\n\n**Visual Simplification:**\n- Consistent border-radius: 16px (rounded-2xl) everywhere\n- Single shadow style: shadow-sm\n- Consistent borders: border-gray-100\n- Clean white card backgrounds (removed gradients)\n- Removed unused Card and CalloutCard imports\n\n**Content Updates:**\n- Renamed \"Executive Analysis\" to \"Video Analysis\"\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
