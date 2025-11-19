@@ -26,7 +26,9 @@
       "Bash(npm run dist:force:*)",
       "Bash(npm run test:permissions:*)",
       "Bash(bash:*)",
-      "Bash(ps:*)"
+      "Bash(ps:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd macOS Desktop App with Electron wrapper\n\n**Desktop App Features:**\n- Native macOS application packaging (.dmg installer)\n- Automatic Next.js backend management\n- One-click launch from Applications folder\n- Intelligent port conflict resolution\n- Graceful process cleanup on exit\n- Health checks with exponential backoff\n\n**Implementation:**\n- Electron 28 with secure IPC bridge\n- Robust npm/node detection across Homebrew, NVM, and system installs\n- Build hooks for executable permissions and validation\n- Comprehensive error handling and user feedback\n- Test suite for configuration validation\n\n**Files Added:**\n- VideoAgentDesktopApp/: Complete Electron app structure\n  - main.js: Backend process management & window lifecycle\n  - start-server.sh: Robust startup script with port management\n  - build-hooks.js: afterPack/beforeBuild validation\n  - preload.js: Secure context isolation\n  - package.json: Build configuration for electron-builder\n  - Test suite: permissions, config, integration tests\n  - Documentation: README and TESTING guides\n\n**Updates:**\n- Main README: Added Desktop App section with installation guide\n- Claude settings: Added bash command approvals for build operations\n\n**Build Output:**\n- Creates signed DMG installer: Video Agent-1.0.0-arm64.dmg\n- App bundle includes unpacked start-server.sh with correct permissions\n- Works on macOS 10.15+ (Catalina and later)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
