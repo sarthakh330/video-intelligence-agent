@@ -1,0 +1,88 @@
+{
+  "name": "video-agent-desktop",
+  "version": "1.0.0",
+  "description": "Video Intelligence Agent - macOS Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "npm run test:permissions && npm run test:config",
+    "test:config": "node test-config.js",
+    "test:permissions": "node test-permissions.js",
+    "test:integration": "node test-integration.js",
+    "test:all": "npm run test:permissions && npm run test:config && npm run test:integration",
+    "dist": "npm run test && electron-builder --mac dmg",
+    "dist:force": "electron-builder --mac dmg",
+    "dist:dir": "electron-builder --mac dir",
+    "clean": "rm -rf dist build"
+  },
+  "keywords": [
+    "electron",
+    "video-analysis",
+    "desktop-app",
+    "macos"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.videoagent.desktop",
+    "productName": "Video Agent",
+    "copyright": "Copyright © 2025",
+    "beforeBuild": "build-hooks.js",
+    "afterPack": "build-hooks.js",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "background": null,
+      "window": {
+        "width": 540,
+        "height": 380
+      },
+      "contents": [
+        {
+          "x": 140,
+          "y": 190,
+          "type": "file"
+        },
+        {
+          "x": 400,
+          "y": 190,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "start-server.sh",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "start-server.sh"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    }
+  }
+}

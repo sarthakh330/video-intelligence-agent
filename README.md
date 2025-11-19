@@ -102,6 +102,47 @@ Blog posts are optimized to match:
 - **a16z Essays**: First-principles thinking about trends
 - **The Economist**: Global context and implications
 
+## macOS Desktop App
+
+A native macOS desktop application that packages the Video Intelligence Reader as a standalone app with automatic backend management.
+
+### Features
+- **One-Click Launch**: Opens directly from Applications - no terminal needed
+- **Automatic Backend**: Starts Next.js server automatically in the background
+- **Port Management**: Automatically handles port conflicts
+- **Graceful Shutdown**: Cleans up backend process when app closes
+- **Native Experience**: Full macOS integration with dock icon and window management
+
+### Installation
+
+**Option 1: Build from Source**
+```bash
+cd VideoAgentDesktopApp
+npm install
+npm run dist
+```
+
+The DMG installer will be created in `VideoAgentDesktopApp/dist/Video Agent-1.0.0-arm64.dmg`
+
+**Option 2: Install Pre-built DMG**
+1. Download the DMG file
+2. Open the DMG
+3. Drag "Video Agent" to Applications folder
+4. Launch from Applications
+
+### Requirements
+- macOS 10.15 (Catalina) or later
+- Node.js 18.x or later (must be installed on your system)
+- All dependencies from the main project installed
+
+### How It Works
+1. App launches and automatically starts the Next.js development server
+2. Waits for backend to be ready (with health checks)
+3. Opens the web interface in an Electron window
+4. Automatically terminates the backend when you quit the app
+
+For more details, see [VideoAgentDesktopApp/README.md](VideoAgentDesktopApp/README.md)
+
 ## Architecture
 
 - **Frontend**: Next.js 15 with App Router, React 18, TypeScript, Tailwind CSS
@@ -109,6 +150,7 @@ Blog posts are optimized to match:
 - **Transcript**: youtubei.js for YouTube data extraction
 - **UI Components**: Custom components with Google Labs-inspired design
 - **Storage**: localStorage for video history, sessionStorage for analysis data
+- **Desktop App**: Electron wrapper for native macOS experience
 
 ## API Schema
 

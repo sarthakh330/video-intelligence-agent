@@ -1,0 +1,13 @@
+ICON PLACEHOLDER
+================
+
+Place your app icon here as 'icon.icns' for macOS builds.
+
+To create an .icns file from a PNG:
+1. Create a 1024x1024 PNG icon
+2. Use online converter or macOS command:
+   iconutil -c icns -o icon.icns icon.iconset
+
+If no icon is provided, Electron will use the default icon.
+
+For now, the build will work without a custom icon.
